@@ -14,14 +14,25 @@
     window.addEventListener('load', () => {
       if (document.referrer) {
         const { origin, pathname } = new URL(document.referrer);
+        console.log('window.location.origin', window.location.pathname)
         if (origin === window.location.origin) {
           const backBtn = document.createElement('a');
           backBtn.classList.add('button', 'error-button-back');
           backBtn.href = pathname;
           backBtn.textContent = 'Go back';
           backBtn.title = 'Go back';
+          const routingErrTxt = document.createElement('div');
+          routingErrTxt.textContent = `There is no ${pathname} route path`
+
           const btnContainer = document.querySelector('.button-container');
           btnContainer.append(backBtn);
+          // Check if the container exists
+          if (btnContainer) {
+            btnContainer.append(backBtn);
+            btnContainer.append(routingErrTxt);
+          } else {
+            console.error('Error: .button-container element not found.');
+          }
         }
       }
     });
