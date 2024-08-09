@@ -4,9 +4,9 @@
 }
 
 .banner {
-    background-color: rgb(41, 105, 179);
-    color: rgb(240, 238, 238);
-    padding: 0px 10px 10px;
+    background-color: blue;
+    color: rgba(240, 238, 238, 1);
+    padding: 0 10px 10px; 
     text-align: center;
 }
 
@@ -16,7 +16,7 @@
     height: 100%;
 }
 
-@media (width >=900px) {
+@media (min-width: 900px) { 
     .banner {
         padding: 1px 20px 32px;
     }
