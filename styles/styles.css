@@ -12,12 +12,14 @@
 
 :root {
   /* colors */
-  --background-color: white;
+  --background-color: #0ff; ;
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --text-color: #131313;
   --link-color: #3b63fb;
   --link-hover-color: #1d3ecf;
+  /* --cyan-background-color: #00FFFF; */
+  --magenta-text-color: #f0f;
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
@@ -74,7 +76,7 @@ body {
   display: none;
   margin: 0;
   background-color: var(--background-color);
-  color: var(--text-color);
+  color: var(--magenta-text-color);
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
   line-height: 1.6;
