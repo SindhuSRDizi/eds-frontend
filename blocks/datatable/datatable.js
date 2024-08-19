@@ -4,7 +4,10 @@ import { fetchPlaceholders } from '../../scripts/aem.js';
 const placeholders = await fetchPlaceholders('');
 
 const {
-  sNo, city, country, timezone
+  sNo,
+  city,
+  country,
+  timezone,
 } = placeholders;
 
 let currentOffset = 0;
@@ -15,7 +18,7 @@ function createTableHeader(table) {
   const headerRow = document.createElement('tr');
 
   const headers = [sNo, city, country, timezone];
-  headers.forEach(headerText => {
+  headers.forEach((headerText) => {
     const th = document.createElement('th');
     th.textContent = headerText;
     headerRow.append(th);
@@ -30,7 +33,7 @@ function createTableRow(table, row, i) {
   const tr = document.createElement('tr');
 
   const data = [i, row.City, row.Country, row.TimeZone];
-  data.forEach(dataItemText => {
+  data.forEach((dataItemText) => {
     const td = document.createElement('td');
     td.textContent = dataItemText;
     tr.append(td);
@@ -53,10 +56,10 @@ async function updateTable(jsonURL, parentDiv) {
   }
 }
 
-async function createTable(jsonURL, offset = 0, limit = 20) {
+async function createTable(jsonURL, offset = 0, limitPerPage = 20) {
   const url = new URL(jsonURL);
   url.searchParams.set('offset', offset);
-  url.searchParams.set('limit', limit);
+  url.searchParams.set('limit', limitPerPage);
 
   const resp = await fetch(url);
   const json = await resp.json();
