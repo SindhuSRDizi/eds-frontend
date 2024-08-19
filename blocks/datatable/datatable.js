@@ -11,7 +11,7 @@ const {
 } = placeholders;
 
 let currentOffset = 0;
-let limit = 20;
+const limit = 20;
 
 function createTableHeader(table) {
   const thead = document.createElement('thead');
@@ -45,17 +45,6 @@ function createTableRow(table, row, i) {
   }
 }
 
-async function updateTable(jsonURL, parentDiv) {
-  const table = await createTable(jsonURL, currentOffset, limit);
-  const existingTable = parentDiv.querySelector('.table-container');
-
-  if (existingTable) {
-    existingTable.replaceWith(table);
-  } else {
-    parentDiv.append(table);
-  }
-}
-
 async function createTable(jsonURL, offset = 0, limitPerPage = 20) {
   const url = new URL(jsonURL);
   url.searchParams.set('offset', offset);
@@ -73,6 +62,17 @@ async function createTable(jsonURL, offset = 0, limitPerPage = 20) {
   });
 
   return table;
+}
+
+async function updateTable(jsonURL, parentDiv) {
+  const table = await createTable(jsonURL, currentOffset, limit);
+  const existingTable = parentDiv.querySelector('.table-container');
+
+  if (existingTable) {
+    existingTable.replaceWith(table);
+  } else {
+    parentDiv.append(table);
+  }
 }
 
 function createPaginationControls(jsonURL, parentDiv) {
