@@ -3,10 +3,12 @@ import { fetchPlaceholders } from '../../scripts/aem.js';
 // Fetch placeholders
 const placeholders = await fetchPlaceholders('');
 
-const { sNo, city, country, timezone } = placeholders;
+const {
+  sNo, city, country, timezone
+} = placeholders;
 
 let currentOffset = 0;
-const limit = 20;
+let limit = 20;
 
 async function createTable(jsonURL, offset = 0, limit = 20) {
   const url = new URL(jsonURL);
