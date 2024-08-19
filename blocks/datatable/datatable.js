@@ -10,25 +10,6 @@ const {
 let currentOffset = 0;
 let limit = 20;
 
-async function createTable(jsonURL, offset = 0, limit = 20) {
-  const url = new URL(jsonURL);
-  url.searchParams.set('offset', offset);
-  url.searchParams.set('limit', limit);
-
-  const resp = await fetch(url);
-  const json = await resp.json();
-
-  const table = document.createElement('table');
-  table.classList.add('table-container');
-
-  createTableHeader(table);
-  json.data.forEach((row, i) => {
-    createTableRow(table, row, i + 1 + offset);
-  });
-
-  return table;
-}
-
 function createTableHeader(table) {
   const thead = document.createElement('thead');
   const headerRow = document.createElement('tr');
@@ -59,6 +40,36 @@ function createTableRow(table, row, i) {
   if (!table.contains(tbody)) {
     table.append(tbody);
   }
+}
+
+async function updateTable(jsonURL, parentDiv) {
+  const table = await createTable(jsonURL, currentOffset, limit);
+  const existingTable = parentDiv.querySelector('.table-container');
+
+  if (existingTable) {
+    existingTable.replaceWith(table);
+  } else {
+    parentDiv.append(table);
+  }
+}
+
+async function createTable(jsonURL, offset = 0, limit = 20) {
+  const url = new URL(jsonURL);
+  url.searchParams.set('offset', offset);
+  url.searchParams.set('limit', limit);
+
+  const resp = await fetch(url);
+  const json = await resp.json();
+
+  const table = document.createElement('table');
+  table.classList.add('table-container');
+
+  createTableHeader(table);
+  json.data.forEach((row, i) => {
+    createTableRow(table, row, i + 1 + offset);
+  });
+
+  return table;
 }
 
 function createPaginationControls(jsonURL, parentDiv) {
@@ -95,17 +106,6 @@ function createPaginationControls(jsonURL, parentDiv) {
 
   paginationContainer.append(prevBtn, nextBtn);
   return paginationContainer;
-}
-
-async function updateTable(jsonURL, parentDiv) {
-  const table = await createTable(jsonURL, currentOffset, limit);
-  const existingTable = parentDiv.querySelector('.table-container');
-
-  if (existingTable) {
-    existingTable.replaceWith(table);
-  } else {
-    parentDiv.append(table);
-  }
 }
 
 export default async function decorate(block) {
