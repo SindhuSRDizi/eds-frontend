@@ -54,11 +54,11 @@
   --spacing-xxl: 80px;
   --spacing-xxxl: 104px;
   --card-border-radius-l: 12px;
+
   /* Border-radius */
   --input-border-radius: 4px;
   --color-font-grey: #2c2c2c;
   --teaser-heading-color: #575668;
- 
 }
 
 /* fallback fonts */
