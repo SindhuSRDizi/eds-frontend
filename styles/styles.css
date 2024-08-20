@@ -12,12 +12,15 @@
 
 :root {
   /* colors */
-  --background-color: white;
+  --background-color: #fff;
+  --cyan-background-color: #b2ffff;
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --text-color: #131313;
   --link-color: #3b63fb;
   --link-hover-color: #1d3ecf;
+  --magenta-text-color: #909;
+  --grey-color: #c2c1c1;
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
@@ -38,6 +41,24 @@
 
   /* nav height */
   --nav-height: 64px;
+
+  /* Spacing (Consonant) */
+  --spacing-xxxs: 4px;
+  --spacing-xxs: 8px;
+  --spacing-xs: 16px;
+  --spacing-s: 24px;
+  --spacing-m: 32px;
+  --spacing-ml: 40px;
+  --spacing-l: 48px;
+  --spacing-xl: 56px;
+  --spacing-xxl: 80px;
+  --spacing-xxxl: 104px;
+  --card-border-radius-l: 12px;
+
+  /* Border-radius */
+  --input-border-radius: 4px;
+  --color-font-grey: #2c2c2c;
+  --teaser-heading-color: #575668;
 }
 
 /* fallback fonts */
@@ -73,8 +94,8 @@
 body {
   display: none;
   margin: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: var(--cyan-background-color);
+  color: var(--magenta-text-color);
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
   line-height: 1.6;
@@ -227,6 +248,11 @@ main img {
   width: 100%;
 }
 
+.icon.icon-box-arrow-right {
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
 /* sections */
 main > .section {
   margin: 40px 0;
@@ -252,6 +278,12 @@ main > .section:first-of-type {
 main .section.light,
 main .section.highlight {
   background-color: var(--light-color);
+  margin: 0;
+  padding: 40px 0;
+}
+
+main .section.highlight-section{
+  background-color: var(--grey-color);
   margin: 0;
   padding: 40px 0;
 }
