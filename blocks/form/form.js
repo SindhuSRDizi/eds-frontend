@@ -1,22 +1,22 @@
 import { addInViewAnimationToSingleElement } from '../../utils/helpers.js';
 
-function createSelect(fd) {
+function createSelect(data) {
   const select = document.createElement('select');
-  select.id = fd.Field;
-  if (fd.Placeholder) {
+  select.id = data.Field;
+  if (data.Placeholder) {
     const ph = document.createElement('option');
-    ph.textContent = fd.Placeholder;
+    ph.textContent = data.Placeholder;
     ph.setAttribute('selected', '');
     ph.setAttribute('disabled', '');
     select.append(ph);
   }
-  fd.Options.split(',').forEach((o) => {
+  data.Options.split(',').forEach((o) => {
     const option = document.createElement('option');
     option.textContent = o.trim();
     option.value = o.trim();
     select.append(option);
   });
-  if (fd.Mandatory === 'x') {
+  if (data.Mandatory === 'x') {
     select.setAttribute('required', 'required');
   }
   return select;
@@ -37,7 +37,9 @@ function constructPayload(form) {
 async function submitForm(form) {
   const payload = constructPayload(form);
   payload.timestamp = new Date().toJSON();
-  const resp = await fetch(`https://form.aem.page/main--helix-website--adobe${form.dataset.action}`, {
+  console.log('payload', payload)
+  debugger
+  const resp = await fetch(form.dataset.action, {
     method: 'POST',
     cache: 'no-cache',
     headers: {
@@ -49,19 +51,19 @@ async function submitForm(form) {
   return payload;
 }
 
-function createButton(fd) {
+function createButton(data) {
   const button = document.createElement('button');
-  button.textContent = fd.Label;
+  button.textContent = data.Label;
   button.classList.add('button');
-  if (fd.Type === 'submit') {
+  if (data.Type === 'submit') {
     button.addEventListener('click', async (event) => {
       const form = button.closest('form');
-      if (fd.Placeholder) form.dataset.action = fd.Placeholder;
+      if (data.Placeholder) form.dataset.action = data.Placeholder;
       if (form.checkValidity()) {
         event.preventDefault();
         button.setAttribute('disabled', '');
         await submitForm(form);
-        const redirectTo = fd.Extra;
+        const redirectTo = data.Extra;
         window.location.href = redirectTo;
       }
     });
@@ -69,38 +71,38 @@ function createButton(fd) {
   return button;
 }
 
-function createHeading(fd, el) {
+function createHeading(data, el) {
   const heading = document.createElement(el);
-  heading.textContent = fd.Label;
+  heading.textContent = data.Label;
   return heading;
 }
 
-function createInput(fd) {
+function createInput(data) {
   const input = document.createElement('input');
-  input.type = fd.Type;
-  input.id = fd.Field;
-  input.setAttribute('placeholder', fd.Placeholder);
-  if (fd.Mandatory === 'x') {
+  input.type = data.Type;
+  input.id = data.Field;
+  input.setAttribute('placeholder', data.Placeholder);
+  if (data.Mandatory === 'x') {
     input.setAttribute('required', 'required');
   }
   return input;
 }
 
-function createTextArea(fd) {
+function createTextArea(data) {
   const input = document.createElement('textarea');
-  input.id = fd.Field;
-  input.setAttribute('placeholder', fd.Placeholder);
-  if (fd.Mandatory === 'x') {
+  input.id = data.Field;
+  input.setAttribute('placeholder', data.Placeholder);
+  if (data.Mandatory === 'x') {
     input.setAttribute('required', 'required');
   }
   return input;
 }
 
-function createLabel(fd) {
+function createLabel(data) {
   const label = document.createElement('label');
-  label.setAttribute('for', fd.Field);
-  label.textContent = fd.Label;
-  if (fd.Mandatory === 'x') {
+  label.setAttribute('for', data.Field);
+  label.textContent = data.Label;
+  if (data.Mandatory === 'x') {
     label.classList.add('required');
   }
   return label;
@@ -139,46 +141,46 @@ export async function createForm(formURL) {
   const rules = [];
   // eslint-disable-next-line prefer-destructuring
   form.dataset.action = pathname.split('.json')[0];
-  json.data.forEach((fd) => {
-    fd.Type = fd.Type || 'text';
+  json.data.forEach((data) => {
+    data.Type = data.Type || 'text';
     const fieldWrapper = document.createElement('div');
-    const style = fd.Style ? ` form-${fd.Style}` : '';
-    const fieldId = `form-${fd.Type}-wrapper${style}`;
+    const style = data.Style ? ` form-${data.Style}` : '';
+    const fieldId = `form-${data.Type}-wrapper${style}`;
     fieldWrapper.className = fieldId;
     fieldWrapper.classList.add('field-wrapper');
-    switch (fd.Type) {
+    switch (data.Type) {
       case 'select':
-        fieldWrapper.append(createLabel(fd));
-        fieldWrapper.append(createSelect(fd));
+        fieldWrapper.append(createLabel(data));
+        fieldWrapper.append(createSelect(data));
         break;
       case 'heading':
-        fieldWrapper.append(createHeading(fd, 'h3'));
+        fieldWrapper.append(createHeading(data, 'h3'));
         break;
       case 'legal':
-        fieldWrapper.append(createHeading(fd, 'p'));
+        fieldWrapper.append(createHeading(data, 'p'));
         break;
       case 'checkbox':
-        fieldWrapper.append(createInput(fd));
-        fieldWrapper.append(createLabel(fd));
+        fieldWrapper.append(createInput(data));
+        fieldWrapper.append(createLabel(data));
         break;
       case 'text-area':
-        fieldWrapper.append(createLabel(fd));
-        fieldWrapper.append(createTextArea(fd));
+        fieldWrapper.append(createLabel(data));
+        fieldWrapper.append(createTextArea(data));
         break;
       case 'submit':
-        fieldWrapper.append(createButton(fd));
+        fieldWrapper.append(createButton(data));
         break;
       default:
-        fieldWrapper.append(createLabel(fd));
-        fieldWrapper.append(createInput(fd));
+        fieldWrapper.append(createLabel(data));
+        fieldWrapper.append(createInput(data));
     }
 
-    if (fd.Rules) {
+    if (data.Rules) {
       try {
-        rules.push({ fieldId, rule: JSON.parse(fd.Rules) });
+        rules.push({ fieldId, rule: JSON.parse(data.Rules) });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.warn(`Invalid Rule ${fd.Rules}: ${e}`);
+        console.warn(`Invalid Rule ${data.Rules}: ${e}`);
       }
     }
     form.append(fieldWrapper);

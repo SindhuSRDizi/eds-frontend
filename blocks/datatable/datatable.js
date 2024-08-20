@@ -4,10 +4,10 @@ import { fetchPlaceholders } from '../../scripts/aem.js';
 const placeholders = await fetchPlaceholders('');
 
 const {
-  sNo,
-  city,
-  country,
-  timezone,
+  datatableSNo,
+  datatableCity,
+  datatableCountry,
+  datatableTimezone,
 } = placeholders;
 
 let currentOffset = 0;
@@ -17,7 +17,7 @@ function createTableHeader(table) {
   const thead = document.createElement('thead');
   const headerRow = document.createElement('tr');
 
-  const headers = [sNo, city, country, timezone];
+  const headers = [datatableSNo, datatableCity, datatableCountry, datatableTimezone];
   headers.forEach((headerText) => {
     const th = document.createElement('th');
     th.textContent = headerText;

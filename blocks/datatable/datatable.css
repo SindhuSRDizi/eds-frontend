@@ -1,10 +1,10 @@
-.countries-block {
+.datatable .countries-block {
     width: 100%;
     margin: 0 auto;
     padding: 20px;
 }
 
-.table-container {
+.datatable .table-container {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -12,28 +12,28 @@
     text-align: left;
 }
 
-.table-container th,
-.table-container td {
+.datatable .table-container th,
+.datatable .table-container td {
     padding: 12px 15px;
     border: 1px solid #ddd;
 }
 
-.table-container th {
+.datatable .table-container th {
     background-color: #f4f4f4;
     font-weight: bold;
 }
 
-.table-container tr:nth-child(even) {
+.datatable .table-container tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.pagination-controls {
+.datatable .pagination-controls {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
 
-.pagination-controls button {
+.datatable .pagination-controls button {
     padding: 10px 20px;
     margin: 0 5px;
     background-color: #007bff;
@@ -43,11 +43,11 @@
     cursor: pointer;
 }
 
-.pagination-controls button:disabled {
+.datatable .pagination-controls button:disabled {
     background-color: #aaa;
     cursor: not-allowed;
 }
 
-.pagination-controls button:hover:not(:disabled) {
+.datatable .pagination-controls button:hover:not(:disabled) {
     background-color: #0056b3;
 }
